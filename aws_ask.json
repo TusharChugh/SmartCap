@@ -1,0 +1,45 @@
+{
+  "intents": [
+     {
+      "intent": "What",
+      "slots": [
+        {
+          "name": "Direction",
+          "type": "LIST_OF_DIRECTIONS"
+        },
+        {
+          "name": "Proximity",
+          "type": "LIST_OF_PROXIMITIES"
+        },
+        {
+          "name": "Environment",
+          "type": "LIST_OF_ENVIRONMENTS"
+        }
+       ]
+    },
+     {
+      "intent": "Describe",
+      "slots": [
+        {
+          "name": "Environment",
+          "type": "LIST_OF_ENVIRONMENTS"
+        }
+       ]
+    },
+    {
+      "intent": "Get",
+      "slots": [
+        {
+          "name": "userid",
+          "type": "LIST_OF_IDS"
+        }
+       ]
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    },
+    {
+      "intent": "AMAZON.StopIntent"
+    }
+      ]
+}

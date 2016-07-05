@@ -1,0 +1,19 @@
+#Custom Slot Types 
+
+LIST_OF_DIRECTIONS	Front | Back | Left | Right	
+LIST_OF_ENVIRONMENTS	Environment | Scene	
+LIST_OF_PROXIMITIES	Far | Near	
+LIST_OF_IDS	user
+
+#Sample Utterances
+
+What is there in {Direction} of me.
+What is in the {Direction} direction.
+Describe the {Environment}
+What is {Proximity} to me
+What is {Proximity} from me
+What is in the {Environment}
+Get my {userid} id
+Get the {userid} id
+Get the {userid} info
+Get my {userid} info
