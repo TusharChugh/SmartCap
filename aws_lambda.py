@@ -113,7 +113,7 @@ def on_intent(intent_request, session):
     elif intent_name == "Get":
         return UserHandler(intent, session)
     elif intent_name == "AMAZON.HelpIntent":
-        return get_welcome_response()
+        return get_help_response()
     elif intent_name == "AMAZON.CancelIntent" or intent_name == "AMAZON.StopIntent":
         return handle_session_end_request()
     else:
@@ -130,6 +130,28 @@ def on_session_ended(session_ended_request, session):
     # add cleanup logic here
 
 # --------------- Functions that control the skill's behavior ------------------
+
+def get_help_response():
+    """ If we wanted to initialize the session to have some attributes we could
+    add those here
+    """
+
+    session_attributes = {}
+    card_title = "Help"
+    speech_output = "Smart Cap is an assistant for visually impaired which narrates"\
+    "the description of scene by taking pictures from webcam. " \
+    "It requires raspberry pi and a camera. Instructions to setup are on the github page. " \
+    "If you have done the setup then first get your user info by saying. "\
+    "Get my user info. "\
+    "If you already have your user info setup then try saying. "\
+    "Describe the scene      "\
+    "What command you want to try now?"\
+    # If the user either does not reply to the welcome message or says something
+    # that is not understood, they will be prompted again with this text.
+    reprompt_text = "You can ask me to describe the scene "
+    should_end_session = False
+    return build_response(session_attributes, build_speechlet_response(
+        card_title, speech_output, reprompt_text, should_end_session))
 
 
 def get_welcome_response():
