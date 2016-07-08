@@ -21,28 +21,28 @@ When the user asks Alexa to describe the scene, the Alexa Skills Kit triggers Am
 #Process to be followed for Raspbery pi after getting Raspbian up and running
 
 # [Terminal] Update the system
-1. sudo apt-get update
-2. sudo apt-get upgrade
+1. <pre>$sudo apt-get update</pre>
+2. <pre>$sudo apt-get upgrade</pre>
 
 # [Terminal] Get required libraries
-3. sudo apt-get install python-pip
-4. sudo apt-get install libopencv-dev python-opencv
-5. pip install matplotlib
+3. <pre>$sudo apt-get install python-pip</pre>
+4. <pre>$sudo apt-get install libopencv-dev python-opencv</pre>
+5. <pre>$pip install matplotlib</pre>
 
 # Configure for AWS
-6. [Terminal] pip install boto3
-7. [Terminal] sudo pip install awscli
+6. <pre>$pip install boto3</pre>
+7. <pre>$pip install awscli</pre>
 8. Go to https://console.aws.amazon.com/iam/
    a. Users -> <yourname> -> Security Credentials -> 'Create Access Key'
-9. [Terminal] sudo aws configure and use the credentials (from above step)
+9. <pre>$sudo aws configure</pre> and use the credentials (from above step)
 
 # Get your key for Microsoft Vision API's 
 10. Login to http://manage.windowsazure.com with your Microsoft Account
 11. Go to New -> Marketplace ->ComputerVision API's (complete the form)
 
 # Clone the code
-12. git clone https://github.com/TusharChugh/SmartCap.git
-13. Open ms_visionapi and paste the key that you got from step 11
+12. <pre>$git clone https://github.com/TusharChugh/SmartCap.git</pre>
+13. Open ms_visionapi and paste the key that you got from previous section
 
 # (Required in case you are creating your own Alexa skills, lambda function and dynamodb)
 # AWS Dynamo DB
@@ -80,9 +80,9 @@ When the user asks Alexa to describe the scene, the Alexa Skills Kit triggers Am
 5. In the userId card, you would see a long string
 6. Copy the userId and paste it in aws_dynamodb.py file
 7. Make sure you have python 2.7.9 +. [Terminal] which python. [Terminal] python --version
-8. [Terminal] Run camera_image.py: python camera_image.py (You should see the images in the same folder)
-9. [Terminal] Run ms_visionapi.py: python ms_visionapi.py (You should see the results in the terminal)
-10. [Terminal] Run aws_dynamodb.py: sudo python aws_dynamosb.py (Note: this might require sudo access depending on if you used sudo while doing aws configure. It will tell you if update item succedded for dynamodb)
+8. Run camera_image.py: <pre>$python camera_image.py</pre> (You should see the images in the same folder)
+9. Run ms_visionapi.py: <pre>$python ms_visionapi.py</pre> (You should see the results in the terminal)
+10. Run aws_dynamodb.py: <pre>$python aws_dynamosb.py</pre> (Note: this might require sudo access depending on if you used sudo while doing aws configure. It will tell you if update item succedded for dynamodb)
 11. Speak to Amazon Echo - "Alexa start smart cap" - wait - "describe the scene". If everything went well, you should now hear some relevant to the image that was capture by the camera 
 
 Example: 'I think it is a yellow truck going on the road and the keywords are road, car, trees, sky'
