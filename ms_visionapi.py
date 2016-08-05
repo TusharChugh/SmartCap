@@ -11,14 +11,14 @@ import operator
 import numpy as np
 import csv
 from collections import defaultdict 
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import signal
 
 # Variables
 
 _url = 'https://api.projectoxford.ai/vision/v1/analyses'
 #Here you have to paste your primary key
-_key = 'You key here' 
+_key = 'your primary key here' 
 _maxNumRetries = 10
 
 #To handle the SIGINT when CTRL+C is pressed

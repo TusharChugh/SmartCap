@@ -1,4 +1,4 @@
-#This code reads the string from output.txt and puts this on dynamodb on AWS
+#The code reads the input from output.txt and inserts it in the dynamoDb
 
 from __future__ import print_function # Python 2/3 compatibility
 import boto3
@@ -11,7 +11,7 @@ import ssl
 import datetime
 import calendar
 
-userId = "Your userId here"
+userId = "Your user ID here. Get it using the instruction from alexa"
 
 # Helper class to convert a DynamoDB item to JSON.
 class DecimalEncoder(json.JSONEncoder):
@@ -23,7 +23,8 @@ class DecimalEncoder(json.JSONEncoder):
                 return int(o)
         return super(DecimalEncoder, self).default(o)
 
-
+#Update the item on AWS
+#For that we need guid, timestamp and message
 def call_aws(message):
 	now = datetime.datetime.utcnow()
 	timestamp = int(round((now - datetime.datetime(2016, 1 , 1)).total_seconds()))
@@ -45,7 +46,7 @@ def call_aws(message):
 		    },
 		    ReturnValues="UPDATED_NEW"
 		)
-		print("Update Item succeeded:")
+		print("PutItem succeeded:")
 		return 1
 	except Exception, e:
 		print (e)
@@ -56,8 +57,14 @@ def call_aws(message):
 
 #print(json.dumps(response, indent=4, cls=DecimalEncoder))
 
+def lambda_handler(event, context):
+    """ Route the incoming request based on type (LaunchRequest, IntentRequest,
+    etc.) The JSON body of the request is provided in the event parameter.
+    """
+#Main function
 def main():
 	ssl._create_default_https_context = ssl._create_unverified_context
+	#Open the output.txt file in the read mode"
 	fo = open("output.txt", "rt")
 	try:			
 		e = call_aws(str(fo.read()))						
