@@ -83,7 +83,8 @@ When the user asks Alexa to describe the scene, the Alexa Skills Kit triggers Am
 8. Run camera_image.py: <pre>$python camera_image.py</pre> (You should see the images in the same folder)
 9. Run ms_visionapi.py: <pre>$python ms_visionapi.py</pre> (You should see the results in the terminal)
 10. Run aws_dynamodb.py: <pre>$python aws_dynamosb.py</pre> (Note: this might require sudo access depending on if you used sudo while doing aws configure. It will tell you if update item succedded for dynamodb)
-11. Speak to Amazon Echo - "Alexa start smart cap" - wait - "describe the scene". If everything went well, you should now hear some relevant to the image that was capture by the camera 
+11. Alternatively, you can use the autorun script instead of step 9 and 10. <pre>$sh autorun.sh</pre>
+12. Speak to Amazon Echo - "Alexa start smart cap" - wait - "describe the scene". If everything went well, you should now hear some relevant to the image that was capture by the camera 
 
 Example: 'I think it is a yellow truck going on the road and the keywords are road, car, trees, sky'
 
