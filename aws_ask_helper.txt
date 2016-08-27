@@ -1,19 +1,58 @@
 #Custom Slot Types 
 
 LIST_OF_DIRECTIONS	Front | Back | Left | Right	
-LIST_OF_ENVIRONMENTS	Environment | Scene	
+LIST_OF_ENVIRONMENTS	Environment | Scene | Picture | Photo | Photograph | Text	
+LIST_OF_IDS	user	
 LIST_OF_PROXIMITIES	Far | Near	
-LIST_OF_IDS	user
+LIST_OF_REQUESTS	What | Describe | Tell | Explain
 
 #Sample Utterances
 
-What is there in {Direction} of me.
-What is in the {Direction} direction.
-Describe the {Environment}
-What is {Proximity} to me
-What is {Proximity} from me
-What is in the {Environment}
-Get my {userid} id
-Get the {userid} id
-Get the {userid} info
-Get my {userid} info
+SceneDescription What is there in {Direction} of me
+SceneDescription What is in {Direction} of me
+SceneDescription What is in the {Direction} direction
+SceneDescription What is {Proximity} to me
+SceneDescription What is {Proximity} from me
+SceneDescription What is in the {Environment}
+SceneDescription What is in {Proximity}
+
+SceneDescription Describe the {Environment}
+SceneDescription Describe What is there in {Direction} of me
+SceneDescription Describe What is in {Direction} of me
+SceneDescription Describe What is in the {Direction} direction
+SceneDescription Describe What is {Proximity} to me
+SceneDescription Describe What is {Proximity} from me
+SceneDescription Describe What is in the {Environment}
+SceneDescription Describe What is {Proximity}
+
+SceneDescription Explain the {Environment}
+SceneDescription Explain What is there in {Direction} of me
+SceneDescription Explain What is in {Direction} of me
+SceneDescription Explain What is in the {Direction} direction
+SceneDescription Explain What is {Proximity} to me
+SceneDescription Explain What is {Proximity} from me
+SceneDescription Explain What is in the {Environment}
+SceneDescription Explain What is in {Proximity}
+
+SceneDescription Tell What is there in {Direction} of me
+SceneDescription Tell What is in {Direction} of me
+SceneDescription Tell What is in the {Direction} direction
+SceneDescription Tell What is {Proximity} to me
+SceneDescription Tell What is {Proximity} from me
+SceneDescription Tell What is in the {Environment}
+SceneDescription Tell What is in {Proximity}
+
+GetUserId Get my {userid} id
+GetUserId Get the {userid} id
+GetUserId Get the {userid} info
+GetUserId Get my {userid} info
+GetUserId What is my {userid} info
+GetUserId What is my {userid} id
+GetUserId Find my {userid} id
+GetUserId Find my {userid} info
+
+AMAZON.StopIntent quit
+AMAZON.StopIntent stop
+AMAZON.StopIntent exit
+AMAZON.StopIntent enough
+AMAZON.StopIntent shut
