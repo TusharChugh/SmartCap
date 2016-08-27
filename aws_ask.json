@@ -1,7 +1,7 @@
 {
   "intents": [
      {
-      "intent": "What",
+      "intent": "SceneDescription",
       "slots": [
         {
           "name": "Direction",
@@ -17,17 +17,9 @@
         }
        ]
     },
-     {
-      "intent": "Describe",
-      "slots": [
-        {
-          "name": "Environment",
-          "type": "LIST_OF_ENVIRONMENTS"
-        }
-       ]
-    },
+    
     {
-      "intent": "Get",
+      "intent": "GetUserId",
       "slots": [
         {
           "name": "userid",
