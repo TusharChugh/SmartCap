@@ -34,7 +34,7 @@ When the user asks Alexa to describe the scene, the Alexa Skills Kit triggers Am
 7. <pre>pip install awscli</pre>
 8. Go to https://console.aws.amazon.com/iam/
    a. Users -> <yourname> -> Security Credentials -> 'Create Access Key'
-9. <pre>$sudo aws configure</pre> and use the credentials (from above step)
+9. <pre>sudo aws configure</pre> and use the credentials (from above step)
 
 # Get your key for Microsoft Vision API's 
 10. Login to http://manage.windowsazure.com with your Microsoft Account
@@ -55,9 +55,9 @@ When the user asks Alexa to describe the scene, the Alexa Skills Kit triggers Am
 19. Copy the code given in 'aws_dynamodb.py' to your lambda function
 20. Change the table name in the code
 
-#AWS Alexa Skills Kit
-21. Got to https://developer.amazon.com/edw/home.html#/skills
-22. Click on Add a new skill  
+# AWS Alexa Skills Kit  
+21. Got to https://developer.amazon.com/edw/home.html#/skills  
+22. Click on Add a new skill    
 23. Skill Information - Custom Skills, Give name like 'Smart Cap'  
 24. Go to interaction model and copy the code from aws_ask.json and paste it in Intent Schema  
 25. From 'aws_ask_helper.txt' file use custom slot types and sample utterances  
