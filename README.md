@@ -50,8 +50,8 @@ When the user asks Alexa to describe the scene, the Alexa Skills Kit triggers Am
 16. Give table name (smartcap) and Primary partition key as guid (String). Click Done
 
 # AWS Lambda Function 
-17. Login to your Amazon Console - https://console.aws.amazon.com/
-18. Go to Services -> Lambda -> New (seach for alexa and get the template related to color app)
+17. Login to your Amazon Console - https://console.aws.amazon.com/. Go to IAM roles, create a new role for lambda giving permissions to the dynamoDB.
+18. Go to Services -> Lambda -> Create function -> Blueprints (seach for alexa and get the template related to color app). Select the role created in the previous step. 
 19. Copy the code given in 'aws_dynamodb.py' to your lambda function
 20. Change the table name in the code
 
