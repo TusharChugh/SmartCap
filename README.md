@@ -53,7 +53,7 @@ When the user asks Alexa to describe the scene, the Alexa Skills Kit triggers Am
 17. Login to your Amazon Console - https://console.aws.amazon.com/. Go to IAM roles, create a new role for lambda giving permissions to the dynamoDB.
 18. Go to Services -> Lambda -> Create function -> Blueprints (seach for alexa and get the template related to color app). Select the role created in the previous step. 
 19. Copy the code given in 'aws_dynamodb.py' to your lambda function
-20. Change the table name in the code
+20. Change the table name(and/or region) in the code and the application id of the skill kit(get it from skills kit. it should look like amzn1.echo-sdk-ams.app.xxxx.xxxx)
 
 # AWS Alexa Skills Kit  
 21. Got to https://developer.amazon.com/edw/home.html#/skills  
