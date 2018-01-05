@@ -24,7 +24,7 @@ When the user asks Alexa to describe the scene, the Alexa Skills Kit triggers Am
 1. <pre>sudo apt-get update</pre>
 2. <pre>sudo apt-get upgrade</pre>
 
-# [Terminal] Get required libraries
+# Get required libraries
 3. <pre>sudo apt-get install python-pip</pre>
 4. <pre>sudo apt-get install libopencv-dev python-opencv</pre>
 5. <pre>pip install matplotlib</pre>
