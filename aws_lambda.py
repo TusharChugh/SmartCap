@@ -16,9 +16,12 @@ dynamodb = boto3.resource("dynamodb", region_name='us-east-1', endpoint_url="htt
 
 table = dynamodb.Table('smartcap')
 
+#TODO: Replace the app_id in the code
 
 #Gets the data from dynamodb based on userid
 def GetData(session):
+    #timestamp = datetime.datetime.utcnow() - datetime.timedelta(minutes = 5)
+    #days = (now - datetime.datetime(2016, 1, 1)).days 
     userId = session['user']['userId'].split('.') 
     userId = userId[3]
     try:
@@ -32,7 +35,7 @@ def GetData(session):
             final_response = item["command"]
             tstamp = item["tstamp"]
         
-        if (response == None):
+        if (response['Count'] == 0):
             final_response = "No Data with this userid. You can ask to get the userid"
         
         else:
@@ -62,9 +65,9 @@ def lambda_handler(event, context):
     prevent someone else from configuring a skill that sends requests to this
     function.
     """
-    # if (event['session']['application']['applicationId'] !=
-    #         "amzn1.echo-sdk-ams.app.0c211eaf-e37d-411d-b975-******"):
-    #     raise ValueError("Invalid Application ID")
+    if (event['session']['application']['applicationId'] !=
+            "amzn1.echo-sdk-ams.app.xxxx.xxxx"):
+        raise ValueError("Invalid Application ID")
 
     if event['session']['new']:
         on_session_started({'requestId': event['request']['requestId']},
@@ -106,12 +109,12 @@ def on_intent(intent_request, session):
     intent_name = intent_request['intent']['name']
 
     # Dispatch to your skill's intent handlers
-    if intent_name == "What":
-        return WhatHandler(intent, session)
-    elif intent_name == "Describe":
-        return DescribeHandler(intent, session)
-    elif intent_name == "Get":
-        return UserHandler(intent, session)
+    if intent_name == "SceneDescription":
+        return SceneDescriptionHandler(intent, session)
+    # elif intent_name == "Describe":
+    #     return DescribeHandler(intent, session)
+    elif intent_name == "GetUserId":
+        return GetUserIdHandler(intent, session)
     elif intent_name == "AMAZON.HelpIntent":
         return get_help_response()
     elif intent_name == "AMAZON.CancelIntent" or intent_name == "AMAZON.StopIntent":
@@ -131,28 +134,6 @@ def on_session_ended(session_ended_request, session):
 
 # --------------- Functions that control the skill's behavior ------------------
 
-def get_help_response():
-    """ If we wanted to initialize the session to have some attributes we could
-    add those here
-    """
-
-    session_attributes = {}
-    card_title = "Help"
-    speech_output = "Smart Cap is an assistant for visually impaired which narrates"\
-    "the description of scene by taking pictures from webcam. " \
-    "It requires raspberry pi and a camera. Instructions to setup are on the github page. " \
-    "If you have done the setup then first get your user info by saying. "\
-    "Get my user info. "\
-    "If you already have your user info setup then try saying. "\
-    "Describe the scene      "\
-    "What command you want to try now?"\
-    # If the user either does not reply to the welcome message or says something
-    # that is not understood, they will be prompted again with this text.
-    reprompt_text = "You can ask me to describe the scene "
-    should_end_session = False
-    return build_response(session_attributes, build_speechlet_response(
-        card_title, speech_output, reprompt_text, should_end_session))
-
 
 def get_welcome_response():
     """ If we wanted to initialize the session to have some attributes we could
@@ -167,7 +148,29 @@ def get_welcome_response():
     reprompt_text = "You can ask me to describe the scene "
     should_end_session = False
     return build_response(session_attributes, build_speechlet_response(
-        card_title, speech_output, reprompt_text, should_end_session))
+        card_title, speech_output, speech_output, reprompt_text, should_end_session))
+        
+def get_help_response():
+    """ If we wanted to initialize the session to have some attributes we could
+    add those here
+    """
+
+    session_attributes = {}
+    card_title = "Help"
+    speech_output = "Smart Cap is an assistant for visually impaired which narrates"\
+    "the description of scene by taking pictures from webcam. " \
+    "It requires raspberry pi and a camera. Instructions to setup are on the github page. " \
+    "If you have done the setup then first get your user info by saying. "\
+    "Get my user info. "\
+    "If you already have your user info setup then try saying. "\
+    "Describe the scene. . . . "\
+    "What command you want to try now?"\
+    # If the user either does not reply to the welcome message or says something
+    # that is not understood, they will be prompted again with this text.
+    reprompt_text = "You can ask me to describe the scene "
+    should_end_session = False
+    return build_response(session_attributes, build_speechlet_response(
+        card_title, speech_output, speech_output, reprompt_text, should_end_session))
 
 
 def handle_session_end_request():
@@ -177,29 +180,40 @@ def handle_session_end_request():
     # Setting this to true ends the session and exits the skill.
     should_end_session = True
     return build_response({}, build_speechlet_response(
-        card_title, speech_output, None, should_end_session))
+        card_title, speech_output, speech_output, None, should_end_session))
 
 
-def WhatHandler(intent, session):
+def SceneDescriptionHandler(intent, session):
 
-    card_title = "What is there?"
+    card_title = "Scene Description: "
     session_attributes = {}
     should_end_session = True
+    data = GetData(session)
+    print (str(data))
+    speech_output = str(data)
 
-    if 'Direction' in intent['slots']:
+    if 'Direction' in intent['slots'] and 'value' in intent['slots']['Direction']:
         direction = intent['slots']['Direction']['value']
         session_attributes = create_description_scene_attributes(direction)
-        data = GetData(session)
-        print (str(data))
-        speech_output = str(data)
-        reprompt_text = "You can ask me to see what is there in from of me "
+        reprompt_text = "You can ask me to tell what is there in front of me "
+        
+    elif 'Environment' in intent['slots'] and 'value' in intent['slots']['Environment']:
+        environment = intent['slots']['Environment']['value']
+        session_attributes = create_description_scene_attributes(environment)
+        reprompt_text = "You can ask me to describe the scene "
+        
+    elif 'Proximity' in intent['slots'] and 'value' in intent['slots']['Proximity']:
+        proximity = intent['slots']['Proximity']['value']
+        session_attributes = create_description_scene_attributes(proximity)
+        reprompt_text = "You can ask me to descibe what is nearby "
+        
     else:
         speech_output = "You can ask me to describe the scene "
         reprompt_text = "You can ask me to describe the scene " 
     return build_response(session_attributes, build_speechlet_response(
-        card_title, speech_output, reprompt_text, should_end_session))
+        card_title, speech_output, speech_output, reprompt_text, should_end_session))
         
-def UserHandler(intent, session):
+def GetUserIdHandler(intent, session):
 
     card_title = "UserId"
     session_attributes = {}
@@ -210,50 +224,52 @@ def UserHandler(intent, session):
         session_attributes = create_description_scene_attributes(userid)
         data = session['user']['userId'].split('.') 
         print (str(data[3]))
-        speech_output = str(data[3])
+        text_output = str(data[3])
+        speech_output = "Your user info would now be visible on the card when" \
+         " you login to Alexa app at alexa.amazon.com"
         reprompt_text = "You can ask me to get the user info " 
     else:
         speech_output = "You can ask me to get the user info "
         reprompt_text = "You can ask me to get the user info " 
     return build_response(session_attributes, build_speechlet_response(
-        card_title, speech_output, reprompt_text, should_end_session))
+        card_title, speech_output, text_output, reprompt_text, should_end_session))
 
 
 def create_description_scene_attributes(description):
     return {"SceneDescription": description}
 
 
-def DescribeHandler(intent, session):
-    card_title = "Describe the scene"
-    session_attributes = {}
-    should_end_session = True
+# def DescribeHandler(intent, session):
+#     card_title = "Describe the scene"
+#     session_attributes = {}
+#     should_end_session = True
 
-    if 'Environment' in intent['slots']:
-        environment = intent['slots']['Environment']['value']
-        session_attributes = create_description_scene_attributes(environment)
-        data = GetData(session)
-        print (str(data))
-        speech_output = str(data)
-        reprompt_text = "You can ask me to describe the scene "
-    else:
-        speech_output = "You can ask me to describe the scene "
-        reprompt_text = "You can ask me to describe the scene "
-    return build_response(session_attributes, build_speechlet_response(
-        card_title, speech_output, reprompt_text, should_end_session))
+#     if 'Environment' in intent['slots']:
+#         environment = intent['slots']['Environment']['value']
+#         session_attributes = create_description_scene_attributes(environment)
+#         data = GetData(session)
+#         print (str(data))
+#         speech_output = str(data)
+#         reprompt_text = "You can ask me to describe the scene "
+#     else:
+#         speech_output = "You can ask me to describe the scene "
+#         reprompt_text = "You can ask me to describe the scene "
+#     return build_response(session_attributes, build_speechlet_response(
+#         card_title, speech_output, reprompt_text, should_end_session))
 
 # --------------- Helpers that build all of the responses ----------------------
 
 
-def build_speechlet_response(title, output, reprompt_text, should_end_session):
+def build_speechlet_response(title, output_speech, output_text, reprompt_text, should_end_session):
     return {
         'outputSpeech': {
             'type': 'PlainText',
-            'text': output
+            'text': output_speech
         },
         'card': {
             'type': 'Simple',
             'title': 'Smart Cap- ' + title,
-            'content': 'Scene Description - ' + output
+            'content': 'Scene Description - ' + output_text
         },
         'reprompt': {
             'outputSpeech': {
